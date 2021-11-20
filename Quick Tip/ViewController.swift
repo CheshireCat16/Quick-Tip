@@ -94,6 +94,13 @@ class ViewController: UIViewController {
         // Have the keyboard come up for entering the bill on load
         self.title = "Quick Tip"
         billAmountTextField.becomeFirstResponder()
+        
+        // Set up initial values to be consistent with currency
+        let initAmount = Bill(currency: curCurrency)
+        tipAmountLabel.text = initAmount.description
+        totalLabel.text = initAmount.description
+        billAmountTextField.placeholder = initAmount.description
+        
     }
     
     @IBAction func updateSlideTip(_ sender: Any) {
@@ -150,6 +157,14 @@ class ViewController: UIViewController {
             defaultCurrency = "Default"
             curCurrency = Currency.def
         }
+        
+        // Set values of tip, total, and bill to be consistent with defaults
+        let initAmount = Bill(currency: curCurrency)
+        tipAmountLabel.text = initAmount.description
+        totalLabel.text = initAmount.description
+        billAmountTextField.text = ""
+        billAmountTextField.placeholder = initAmount.description
+        
     }
     
 
