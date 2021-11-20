@@ -7,6 +7,40 @@
 
 import UIKit
 
+
+// Enum of supported currencies
+enum Currency: String, Codable {
+    case eur
+    case usd
+    case jpy
+    case gbp
+    case def
+}
+
+// Struct to handle bill and tip amounts
+struct Bill: Codable {
+    var amount: Float = 0
+    var currency: Currency = Currency.def
+}
+
+// Convert currency value to location appropriate string for display
+extension Bill: CustomStringConvertible {
+    var description: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        if currency != Currency.def {
+            formatter.currencyCode = currency.rawValue
+        }
+        formatter.maximumFractionDigits = 2
+        
+        let number = NSNumber(value: amount)
+        return formatter.string(from: number)!
+    }
+}
+
+// Holds the current currency
+var curCurrency = Currency.def
+
 class ViewController: UIViewController {
 
     
@@ -32,6 +66,26 @@ class ViewController: UIViewController {
             currentDefault = 15.0
         }
         
+        // Set the currency to default if not already set
+        var defaultCurrency = String(UserDefaults.standard.string(forKey: "currency") ?? "")
+        if (defaultCurrency == "$") {
+            curCurrency = Currency.usd
+        }
+        else if (defaultCurrency == "€") {
+            curCurrency = Currency.eur
+        }
+        else if (defaultCurrency == "£") {
+            curCurrency = Currency.gbp
+        }
+        else if (defaultCurrency == "¥") {
+            curCurrency = Currency.jpy
+        }
+        else {
+            defaultCurrency = "Default"
+            curCurrency = Currency.def
+            UserDefaults.standard.set("Default", forKey: "currency")
+        }
+        
         
         // Set the default value of the tip slider
         slideTipPercent.text = String(format: "%.f%%", UserDefaults.standard.double(forKey: "tip"))
@@ -49,17 +103,25 @@ class ViewController: UIViewController {
         slideTipPercent.text = String(format:"%.f%%", slideTipText)
         
         // Pull in bill amount from text field input
-        let bill = Float(billAmountTextField.text!) ?? 0
+        var bill = Bill(currency: curCurrency)
+        // get raw string value from text box (may contain , instead of .)
+        let rawBill = String(billAmountTextField.text ?? "")
+        // Replace the , with ., if it's present
+        let cleanBill = String(rawBill.replacingOccurrences(of: ",", with: "."))
+        bill.amount = Float(cleanBill) ?? 0
         
+        // Create tip and totals
+        var tip = Bill(currency: curCurrency)
+        var total = Bill(currency: curCurrency)
         
-        // Get total tip
-        let tip = bill * slideTipDouble
-        let total = bill + tip
+        // Get total and tip amounts
+        tip.amount = bill.amount * slideTipDouble
+        total.amount = bill.amount + tip.amount
         
         // Update tip amount
-        tipAmountLabel.text = String(format: "$%.2f", tip)
+        tipAmountLabel.text = tip.description
         // Update total amount
-        totalLabel.text = String(format: "$%.2f", total)
+        totalLabel.text = total.description
     }
     
     // Make sure we're set to default when coming back from the settings page
@@ -69,6 +131,25 @@ class ViewController: UIViewController {
         // Set the default value of the tip slider
         slideTipPercent.text = String(format: "%.f%%", UserDefaults.standard.double(forKey: "tip"))
         tipSlider.value = Float(UserDefaults.standard.double(forKey: "tip"))
+        
+        // Also update the currency setting
+        var defaultCurrency = String(UserDefaults.standard.string(forKey: "currency") ?? "")
+        if (defaultCurrency == "$") {
+            curCurrency = Currency.usd
+        }
+        else if (defaultCurrency == "€") {
+            curCurrency = Currency.eur
+        }
+        else if (defaultCurrency == "£") {
+            curCurrency = Currency.gbp
+        }
+        else if (defaultCurrency == "¥") {
+            curCurrency = Currency.jpy
+        }
+        else {
+            defaultCurrency = "Default"
+            curCurrency = Currency.def
+        }
     }
     
 
