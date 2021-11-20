@@ -24,6 +24,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         // Have the keyboard come up for entering the bill on load
+        self.title = "Quick Tip"
         billAmountTextField.becomeFirstResponder()
     }
     
