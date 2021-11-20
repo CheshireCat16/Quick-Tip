@@ -23,8 +23,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        // billAmountTextField.becomeFirstResponder()
     }
-
+    
     @IBAction func updateSlideTip(_ sender: Any) {
         // Convert value to percentage and update tip percentage
         let slideTipText = round(tipSlider.value)
