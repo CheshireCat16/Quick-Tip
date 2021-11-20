@@ -61,5 +61,16 @@ class ViewController: UIViewController {
         // Update total amount
         totalLabel.text = String(format: "$%.2f", total)
     }
+    
+    // Make sure we're set to default when coming back from the settings page
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("view appeared")
+        // Set the default value of the tip slider
+        slideTipPercent.text = String(format: "%.f%%", UserDefaults.standard.double(forKey: "tip"))
+        tipSlider.value = Float(UserDefaults.standard.double(forKey: "tip"))
+    }
+    
+
 }
 
