@@ -23,7 +23,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        // billAmountTextField.becomeFirstResponder()
+        // Have the keyboard come up for entering the bill on load
+        billAmountTextField.becomeFirstResponder()
     }
     
     @IBAction func updateSlideTip(_ sender: Any) {

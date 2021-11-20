@@ -16,6 +16,7 @@
 		ADFA20B5274935D00037197B /* Quick_TipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFA20B4274935D00037197B /* Quick_TipTests.swift */; };
 		ADFA20BF274935D00037197B /* Quick_TipUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFA20BE274935D00037197B /* Quick_TipUITests.swift */; };
 		ADFA20C1274935D00037197B /* Quick_TipUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFA20C0274935D00037197B /* Quick_TipUITestsLaunchTests.swift */; };
+		ADFA20CE2749595C0037197B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFA20CD2749595C0037197B /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		ADFA20BA274935D00037197B /* Quick TipUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Quick TipUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADFA20BE274935D00037197B /* Quick_TipUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quick_TipUITests.swift; sourceTree = "<group>"; };
 		ADFA20C0274935D00037197B /* Quick_TipUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quick_TipUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		ADFA20CD2749595C0037197B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 				ADFA209F274935CE0037197B /* SceneDelegate.swift */,
 				ADFA20A1274935CE0037197B /* ViewController.swift */,
 				ADFA20A3274935CE0037197B /* Main.storyboard */,
+				ADFA20CD2749595C0037197B /* SettingsViewController.swift */,
 				ADFA20A6274935CF0037197B /* Assets.xcassets */,
 				ADFA20A8274935CF0037197B /* LaunchScreen.storyboard */,
 				ADFA20AB274935CF0037197B /* Info.plist */,
@@ -261,6 +264,7 @@
 				ADFA20A2274935CE0037197B /* ViewController.swift in Sources */,
 				ADFA209E274935CE0037197B /* AppDelegate.swift in Sources */,
 				ADFA20A0274935CE0037197B /* SceneDelegate.swift in Sources */,
+				ADFA20CE2749595C0037197B /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
