@@ -16,7 +16,9 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        // Set the current value of the slider to the current default
+        defaultTip.text = String(format:"%.f%%", UserDefaults.standard.double(forKey: "tip"))
+        defaultTipSlider.value = Float(UserDefaults.standard.double(forKey: "tip"))
     }
     
 
@@ -24,6 +26,7 @@ class SettingsViewController: UIViewController {
         // Convert value to percentage and update tip percentage
         let slideTipText = round(defaultTipSlider.value)
         defaultTip.text = String(format:"%.f%%", slideTipText)
+        UserDefaults.standard.set(defaultTipSlider.value, forKey: "tip")
     }
     
 

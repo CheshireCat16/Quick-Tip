@@ -10,6 +10,7 @@ import UIKit
 class ViewController: UIViewController {
 
     
+    
     @IBOutlet weak var billAmountTextField: UITextField!
     
     @IBOutlet weak var tipAmountLabel: UILabel!
@@ -20,9 +21,22 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var totalLabel: UILabel!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        // Set up the default tip if none is set
+        var currentDefault = UserDefaults.standard.double(forKey: "tip")
+        if (currentDefault < 4.0) {
+            UserDefaults.standard.set(15.0, forKey: "tip")
+            currentDefault = 15.0
+        }
+        
+        
+        // Set the default value of the tip slider
+        slideTipPercent.text = String(format: "%.f%%", UserDefaults.standard.double(forKey: "tip"))
+        tipSlider.value = Float(currentDefault)
+        
         // Have the keyboard come up for entering the bill on load
         self.title = "Quick Tip"
         billAmountTextField.becomeFirstResponder()
