@@ -24,6 +24,7 @@ The following **additional** features are implemented:
 
 - [x] Default tip settings that persist when the app is closed and update the current tip percentage after changing the default
 - [x] Slider allowing tip to be selected between 5% and 35%
+- [x] Allowing users to select default currency, dollars, yen, pounds, or euro while keeping location specific thousands separators and decimals.
 
 ## Video Walkthrough
 

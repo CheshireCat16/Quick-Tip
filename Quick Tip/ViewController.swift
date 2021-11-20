@@ -44,6 +44,7 @@ var curCurrency = Currency.def
 class ViewController: UIViewController {
 
     
+    @IBOutlet weak var tipAndTotalView: UIView!
     
     @IBOutlet weak var billAmountTextField: UITextField!
     
@@ -55,9 +56,11 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var totalLabel: UILabel!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Hide the tip and total view when first loaded
+        tipAndTotalView.alpha = 0
         
         // Set up the default tip if none is set
         var currentDefault = UserDefaults.standard.double(forKey: "tip")
@@ -104,31 +107,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func updateSlideTip(_ sender: Any) {
-        // Convert value to percentage and update tip percentage
-        let slideTipText = round(tipSlider.value)
-        let slideTipDouble = slideTipText / 100
-        slideTipPercent.text = String(format:"%.f%%", slideTipText)
-        
-        // Pull in bill amount from text field input
-        var bill = Bill(currency: curCurrency)
-        // get raw string value from text box (may contain , instead of .)
-        let rawBill = String(billAmountTextField.text ?? "")
-        // Replace the , with ., if it's present
-        let cleanBill = String(rawBill.replacingOccurrences(of: ",", with: "."))
-        bill.amount = Float(cleanBill) ?? 0
-        
-        // Create tip and totals
-        var tip = Bill(currency: curCurrency)
-        var total = Bill(currency: curCurrency)
-        
-        // Get total and tip amounts
-        tip.amount = bill.amount * slideTipDouble
-        total.amount = bill.amount + tip.amount
-        
-        // Update tip amount
-        tipAmountLabel.text = tip.description
-        // Update total amount
-        totalLabel.text = total.description
+        // Recalculate the tip
+        recalculateTip()
     }
     
     // Make sure we're set to default when coming back from the settings page
@@ -167,6 +147,52 @@ class ViewController: UIViewController {
         
     }
     
-
+    // Handle typing into the bill
+    @IBAction func billChanged(_ sender: Any) {
+        // Recalculate the tip
+        recalculateTip()
+        
+        // If the bill is blank, fade out the tip and total
+        if (billAmountTextField.text == "" && self.tipAndTotalView.alpha == 1){
+            UIView.animate(withDuration: 0.3, animations: {
+                self.tipAndTotalView.alpha = 0
+            })
+        }
+        else if (billAmountTextField.text != "" && self.tipAndTotalView.alpha == 0) {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.tipAndTotalView.alpha = 1
+            })
+        }
+    }
+    
+    
+    func recalculateTip() {
+        // Convert value to percentage and update tip percentage
+        let slideTipText = round(tipSlider.value)
+        let slideTipDouble = slideTipText / 100
+        slideTipPercent.text = String(format:"%.f%%", slideTipText)
+        
+        // Pull in bill amount from text field input
+        var bill = Bill(currency: curCurrency)
+        // get raw string value from text box (may contain , instead of .)
+        let rawBill = String(billAmountTextField.text ?? "")
+        // Replace the , with ., if it's present
+        let cleanBill = String(rawBill.replacingOccurrences(of: ",", with: "."))
+        bill.amount = Float(cleanBill) ?? 0
+        
+        // Create tip and totals
+        var tip = Bill(currency: curCurrency)
+        var total = Bill(currency: curCurrency)
+        
+        // Get total and tip amounts
+        tip.amount = bill.amount * slideTipDouble
+        total.amount = bill.amount + tip.amount
+        
+        // Update tip amount
+        tipAmountLabel.text = tip.description
+        // Update total amount
+        totalLabel.text = total.description
+    }
+    
 }
 
