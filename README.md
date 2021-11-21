@@ -4,7 +4,7 @@ Quick Tip is a tip calculator application for iOS.
 
 Submitted by: John Cheshire
 
-Time spent: 6 hours spent in total
+Time spent: 8 hours spent in total
 
 ## User Stories
 
@@ -15,8 +15,8 @@ The following **required** functionality is complete:
 
 The following **optional** features are implemented:
 
-* [ ] UI animations
-* [ ] Remembering the bill amount across app restarts (if <10mins)
+* [x] UI animations
+* [x] Remembering the bill amount across app restarts (if <10mins)
 * [x] Using locale-specific currency and currency thousands separators.
 * [x] Making sure the keyboard is always visible and the bill amount is always the first responder. This way the user doesn't have to tap anywhere to use this app. Just launch the app and start typing.
 
@@ -36,11 +36,11 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+There were many new areas of Swift to investigate in building this app. A few key challenges were understanding how dates work in Swift, setting up an animation, and understanding how to add a custom string conversion method to use default currencies. Additionally, I am fairly new at working with Swift, so overall understanding of how to put things together took time as well.
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright 2021 John Cheshire
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

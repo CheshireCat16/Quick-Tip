@@ -43,19 +43,25 @@ var curCurrency = Currency.def
 
 class ViewController: UIViewController {
 
-    
+    // View that holds the tip and total section - for animation
     @IBOutlet weak var tipAndTotalView: UIView!
     
+    // Text field where bill amount is entered
     @IBOutlet weak var billAmountTextField: UITextField!
     
+    // Amount of calculated tip
     @IBOutlet weak var tipAmountLabel: UILabel!
     
+    // Slider to choose tip amount
     @IBOutlet weak var tipSlider: UISlider!
     
+    // display of current tip percentage
     @IBOutlet weak var slideTipPercent: UILabel!
     
+    // Total amount of tip
     @IBOutlet weak var totalLabel: UILabel!
     
+    // Intial load
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -104,6 +110,9 @@ class ViewController: UIViewController {
         totalLabel.text = initAmount.description
         billAmountTextField.placeholder = initAmount.description
         
+ 
+        
+        
     }
     
     @IBAction func updateSlideTip(_ sender: Any) {
@@ -114,7 +123,6 @@ class ViewController: UIViewController {
     // Make sure we're set to default when coming back from the settings page
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("view appeared")
         // Set the default value of the tip slider
         slideTipPercent.text = String(format: "%.f%%", UserDefaults.standard.double(forKey: "tip"))
         tipSlider.value = Float(UserDefaults.standard.double(forKey: "tip"))
@@ -144,6 +152,16 @@ class ViewController: UIViewController {
         totalLabel.text = initAmount.description
         billAmountTextField.text = ""
         billAmountTextField.placeholder = initAmount.description
+        tipAndTotalView.alpha = 0
+        
+        // Check if we should put in the most recent bill from the last time (less than 10 minutes since last time bill amount was changed)
+        let prevClose = UserDefaults.standard.object(forKey: "last exit")
+        let curTime = NSDate()
+        if ((prevClose != nil) && curTime.timeIntervalSince(prevClose as! Date) < 600 && UserDefaults.standard.string(forKey: "last bill") != "") {
+            billAmountTextField.text = UserDefaults.standard.string(forKey: "last bill")
+            tipAndTotalView.alpha = 1
+            recalculateTip()
+        }
         
     }
     
@@ -163,6 +181,8 @@ class ViewController: UIViewController {
                 self.tipAndTotalView.alpha = 1
             })
         }
+        UserDefaults.standard.set(billAmountTextField.text, forKey: "last bill")
+        UserDefaults.standard.set(NSDate(), forKey: "last exit")
     }
     
     
@@ -192,6 +212,11 @@ class ViewController: UIViewController {
         tipAmountLabel.text = tip.description
         // Update total amount
         totalLabel.text = total.description
+    }
+    
+    // Place the current bill value into memory along with current time
+    override func viewWillDisappear(_ animated: Bool) {
+
     }
     
 }

@@ -48,6 +48,9 @@ class SettingsViewController: UIViewController {
         let slideTipText = round(defaultTipSlider.value)
         defaultTip.text = String(format:"%.f%%", slideTipText)
         UserDefaults.standard.set(defaultTipSlider.value, forKey: "tip")
+        
+//        // When tip default is changed, reset the bill amount
+//        UserDefaults.standard.set("", forKey: "last bill")
     }
 
     @IBAction func currencySelected(_ sender: Any) {
@@ -73,6 +76,10 @@ class SettingsViewController: UIViewController {
             curCurrency = Currency.def
             UserDefaults.standard.set("Default", forKey: "currency")
         }
+        
+        // When currency is changed, reset the bill amount
+        UserDefaults.standard.set("", forKey: "last bill")
+        
     }
     
 }
